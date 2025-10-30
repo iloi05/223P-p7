@@ -24,17 +24,20 @@ while True:
         nfaculty = Faculty(first, last, d)
         faculty.append(nfaculty)
     elif prompt == "2":
-        Faculty.printF(faculty)
+            Faculty.printF(faculty)
     elif prompt == "3":
         sfirst = input("Enter first name: ")
         slast = input("Enter last name: ")
         classy = input("Enter class year: ")
         m = input("Enter major: ")
         fa = input("Enter faculty advisor: ")
-        nstudent = Student(sfirst, slast, classy, m, fa)
+        nstudent = Student(sfirst, slast)
+        nstudent.set_class(classy)
+        nstudent.set_major(m)
+        nstudent.set_advisor(fa)
         students.append(nstudent)
     elif prompt == "4":
-        Student.printS(students)
+            Student.printS(students)
     elif prompt == "9":
         break
     if prompt not in choices:
