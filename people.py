@@ -1,3 +1,5 @@
+import re
+
 class Person:
 
     def __init__(self, first_name, last_name):
@@ -9,6 +11,12 @@ class Faculty(Person):
     def __init__(self, first_name, last_name, department):
         super().__init__(first_name, last_name)
         self.department = department
+
+    def valid_dep(department):
+        return re.fullmatch(r"[A-Za-z -]+", department) is not None
+    
+    def valid_dep_len(department):
+        return len(department.strip()) > 1
     
     def printF(faculty_list):
         if not faculty_list:
@@ -31,10 +39,18 @@ class Student(Person):
         self.classyear = class_year
 
     def set_major(self, major):
-        self.major = major
+            self.major = major
     
     def set_advisor(self, advisor):
-        self.advisor = advisor
+        if isinstance(advisor, Faculty):
+            self.advisor = advisor
+            return True
+        
+    def valid_major(major):
+        return re.fullmatch(r"[A-Za-z -]+", major) is not None
+    
+    def valid_major_len(major):
+        return len(major.strip()) > 1
 
     def printS(student_list):
         if not student_list:
@@ -48,5 +64,5 @@ class Student(Person):
                 name = f"{s.firstname} {s.lastname}"
                 classyear = getattr(s, "classyear", "")
                 major = getattr(s, "major", "")
-                advisor = f"{s.advisor.firstname} {s.advisor.lastname}" if hasattr(s, "advisor") else ""
-                print(f"{name:<22}, {classyear:<10} {major:<25} {advisor}")
+                advisor = f"{s.advisor.firstname} {s.advisor.lastname}"
+                print(f"{name:<21} {classyear:<10} {major:<27} {advisor}")
